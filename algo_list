@@ -1,12 +1,12 @@
-1. RSA
-2. Twofish
-3. Diffie-Hellman
-4. AES
-5.  RC6
+1. RSA -- TEXT AND NUMBERICAL
+2. Twofish -- TEXT
+3. Diffie-Hellman -- NUMBERICAL
+4. AES -- TEXT AND NUMERICAL
+5.  RC6 -- 
 
 Additional 5 
-6.3DES
-7. Blowfish
-8. Elliptic Curve Cryptography
-9.IDEA
-10. ElGamal Encryption
+6.3DES -- 
+7. Blowfish --  TEXT
+8. Elliptic Curve Cryptography --
+9.IDEA -- 
+10. ElGamal Encryption -- 
