@@ -1,0 +1,39 @@
+import random 
+import time
+
+def mapping_func():
+    algos  = ['A','B','C','D','E']
+    mapped_algos_check = []
+    mapped_algos = {}
+
+    for key in range(1,26):
+        while True:
+            algo = random.choice(algos)
+            if algo not in mapped_algos_check:
+                mapped_algos.update({key:algo})
+                mapped_algos_check.append(algo)
+                break
+            
+            if (len(mapped_algos_check) == 5 ):
+                mapped_algos_check.clear()
+
+    return mapped_algos
+
+def sequence():
+    # Providing system time as the seed value
+    random.seed(time.time())
+    seq_check = []
+    seq_list = []
+    size = random.randint(2,5)
+  
+    for i in range(0,size):
+        seq_num = random.randint(1, 25)
+        seq_list.append(seq_num)
+    
+    return seq_list
+    
+  
+mapped_dict = mapping_func()
+print(mapped_dict)
+algo_sequence = sequence()
+print(algo_sequence)
