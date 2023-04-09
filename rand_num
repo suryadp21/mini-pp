@@ -1,0 +1,13 @@
+import random
+import time
+
+# Providing system time as the seed value
+random.seed(time.time())
+
+for i in range(1,1000):
+
+# Get a random number
+     rand_num = random.randint(1, 25)
+    
+# Print the random number
+     print(rand_num)
