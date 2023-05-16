@@ -1,44 +1,67 @@
 from twofish import Twofish
+from random import randbytes
 import re
 
+#       Twofish encryption
+
 def Twofish_enc_algo(data,key):
-    if type(data) == bytes:
-        data = data.decode()
+    #Initialize iv to 0 to make sure no element is sliced if iv is not initialised
+    iv = 0
     
-    data_1 = str(data)
-    #16 bytes conversion of data
-    if(len(data) != 16):
-        while True:
-            if (len(data) < 16):
-                data_1 = data_1.zfill(16)
-                break
-            elif (len(data) > 16):
-                data_1 = data_1[:16]
-                break
+    while True:
+        try:
+            #Converting the data to 16 byte form
+            if(len(data) != 16):
+                if(type(data)==str):
+                    while True:
+                        if (len(data) < 16):
+                            data = data.zfill(16)
+                            break
+                        elif (len(data) > 16):
+                            data = data[:16]
+                            break
+                    data = data.encode()
+            
+                else:
+                    #length of the padded data
+                    iv = 16 - len(data)
+                    
+                    #padding the data with a random byte string
+                    padding = randbytes(iv)
+                    data = padding+data
 
+            #key conversion
+            key_in = str(key)
+            key = key_in.encode()
+            
+            #Genrating a Twofish Encryption key and Encrypt the data
+            T = Twofish(key)
+            cipher_text = T.encrypt(data)
+            
+            return cipher_text,iv
+        
+        except (ValueError,TypeError):
+            continue
+
+def Twofish_dec_algo(cipher_text,iv,key):
     
-    #convert to byte format
-    if type(data_1) != bytes:
-        data = data_1.encode()
-    
-    #key
+    #key conversion
     key_in = str(key)
     key = key_in.encode()
     
+    #Genrating a Twofish Decryption key and Decrypt the data
     T = Twofish(key)
-    
-    cipher_text = T.encrypt(data)
-    return cipher_text
-    
+    decipher = T.decrypt(cipher_text)
 
-def Twofish_dec_algo(cipher_text,key):
+    #Removing the padding from decipher
+    decipher = decipher[iv:]
+
+    return decipher
     
-    key_in = str(key)
-    key = key_in.encode()
-    
-    T = Twofish(key)
-    data = T.decrypt(cipher_text).decode()
-    
+def Twofish_decode_mod(decipher):
+
+    #Decoding and removing the padding using regex
+    data = decipher.decode()
     regexPattern = "^0+(?!$)"
     data = re.sub(regexPattern, "", data)
     
