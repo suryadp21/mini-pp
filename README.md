@@ -1,1 +1,1 @@
-# mini-pp
+# A dynamic n model cryptography encryption model
